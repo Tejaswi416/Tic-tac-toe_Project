@@ -1,80 +1,91 @@
 let boxes = document.querySelectorAll(".box");
+let resetBtn = document.querySelector("#reset-btn");
+let newGameBtn = document.querySelector("#new-btn");
+let msgContainer = document.querySelector(".msg-container");
+let msg = document.querySelector("#msg");
 
-let turn = "X";
-let isGameOver = false;
+let turnO = true; //playerX, playerO
+let count = 0; //To Track Draw
 
-boxes.forEach(e => {
-    e.innerHTML = ""
-    e.addEventListener("click", () => {
-        if (!isGameOver && e.innerHTML === "") {
-            e.innerHTML = turn;
-            cheakWin();
-            cheakDraw();
-            changeTurn();
-        }
-    })
-})
+const winPatterns = [
+  [0, 1, 2],
+  [0, 3, 6],
+  [0, 4, 8],
+  [1, 4, 7],
+  [2, 5, 8],
+  [2, 4, 6],
+  [3, 4, 5],
+  [6, 7, 8],
+];
 
-function changeTurn() {
-    if (turn === "X") {
-        turn = "O";
-        document.querySelector(".bg").style.left = "85px";
+const resetGame = () => {
+  turnO = true;
+  count = 0;
+  enableBoxes();
+  msgContainer.classList.add("hide");
+};
+
+boxes.forEach((box) => {
+  box.addEventListener("click", () => {
+    if (turnO) {
+      //playerO
+      box.innerText = "O";
+      turnO = false;
+    } else {
+      //playerX
+      box.innerText = "X";
+      turnO = true;
     }
-    else {
-        turn = "X";
-        document.querySelector(".bg").style.left = "0";
+    box.disabled = true;
+    count++;
+
+    let isWinner = checkWinner();
+
+    if (count === 9 && !isWinner) {
+      gameDraw();
     }
-}
+  });
+});
 
-function cheakWin() {
-    let winConditions = [
-        [0, 1, 2], [3, 4, 5], [6, 7, 8],
-        [0, 3, 6], [1, 4, 7], [2, 5, 8],
-        [0, 4, 8], [2, 4, 6]
-    ]
-    for (let i = 0; i < winConditions.length; i++) {
-        let v0 = boxes[winConditions[i][0]].innerHTML;
-        let v1 = boxes[winConditions[i][1]].innerHTML;
-        let v2 = boxes[winConditions[i][2]].innerHTML;
+const gameDraw = () => {
+  msg.innerText = `Game was a Draw.`;
+  msgContainer.classList.remove("hide");
+  disableBoxes();
+};
 
-        if (v0 != "" && v0 === v1 && v0 === v2) {
-            isGameOver = true;
-            document.querySelector("#results").innerHTML = turn + " win";
-            document.querySelector("#play-again").style.display = "inline"
+const disableBoxes = () => {
+  for (let box of boxes) {
+    box.disabled = true;
+  }
+};
 
-            for (j = 0; j < 3; j++) {
-                boxes[winConditions[i][j]].style.backgroundColor = "#08D9D6"
-                boxes[winConditions[i][j]].style.color = "#000"
-            }
-        }
+const enableBoxes = () => {
+  for (let box of boxes) {
+    box.disabled = false;
+    box.innerText = "";
+  }
+};
+
+const showWinner = (winner) => {
+  msg.innerText = `Congratulations, Winner is ${winner}`;
+  msgContainer.classList.remove("hide");
+  disableBoxes();
+};
+
+const checkWinner = () => {
+  for (let pattern of winPatterns) {
+    let pos1Val = boxes[pattern[0]].innerText;
+    let pos2Val = boxes[pattern[1]].innerText;
+    let pos3Val = boxes[pattern[2]].innerText;
+
+    if (pos1Val != "" && pos2Val != "" && pos3Val != "") {
+      if (pos1Val === pos2Val && pos2Val === pos3Val) {
+        showWinner(pos1Val);
+        return true;
+      }
     }
-}
+  }
+};
 
-function cheakDraw() {
-    if (!isGameOver) {
-        let isDraw = true;
-        boxes.forEach(e => {
-            if (e.innerHTML === "") isDraw = false;
-        })
-
-        if (isDraw) {
-            isGameOver = true;
-            document.querySelector("#results").innerHTML = "Draw";
-            document.querySelector("#play-again").style.display = "inline"
-        }
-    }
-}
-
-document.querySelector("#play-again").addEventListener("click", () => {
-    isGameOver = false;
-    turn = "X";
-    document.querySelector(".bg").style.left = "0";
-    document.querySelector("#results").innerHTML = "";
-    document.querySelector("#play-again").style.display = "none";
-
-    boxes.forEach(e => {
-        e.innerHTML = "";
-        e.style.removeProperty("background-color");
-        e.style.color = "#fff"
-    })
-})
+newGameBtn.addEventListener("click", resetGame);
+resetBtn.addEventListener("click", resetGame);
