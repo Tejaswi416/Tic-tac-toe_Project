@@ -32,6 +32,35 @@
       <button id="bot-mode">Play with Bot 🤖</button>
     </div>
 
+    <!-- Customize Menu -->
+    <div id="customize-screen" class="center-screen hide">
+      <h2>Customize Game</h2>
+      <label>Player Name:
+        <input type="text" id="player-name" placeholder="Enter your name">
+      </label>
+
+      <label>Board Theme:
+        <select id="theme-select">
+          <option value="classic">Classic</option>
+          <option value="dark">Dark</option>
+          <option value="neon">Neon</option>
+        </select>
+      </label>
+
+      <label>Bot Difficulty:
+        <select id="difficulty-select">
+          <option value="easy">Easy</option>
+          <option value="smart" selected>Smart</option>
+          <option value="impossible">Impossible</option>
+        </select>
+      </label>
+
+      <div class="buttons">
+        <button id="save-customize">Save</button>
+        <button id="back-to-mode">Back</button>
+      </div>
+    </div>
+
     <!-- Symbol Selection -->
     <div id="symbol-selection" class="center-screen hide">
       <h2>Choose Your Symbol</h2>
@@ -39,7 +68,7 @@
       <button id="choose-x">X</button>
     </div>
 
-    <!-- Game Area -->
+    <!-- Game Board -->
     <div class="container hide">
       <div class="game">
         <button class="box"></button>
@@ -56,6 +85,9 @@
 
     <button id="reset-btn" class="hide">Reset Game</button>
   </main>
+
+  <!-- Floating Customize Button -->
+  <button id="customize-btn" class="floating-customize">⚙️ Customize</button>
 
   <script src="script.js"></script>
 </body>
