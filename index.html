@@ -1,33 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tic-Tac-Toe Game</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="msg-container hide">
-      <p id="msg">Winner</p>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tic-Tac-Toe Game</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="msg-container hide">
+    <p id="msg">Winner</p>
+    <div class="scoreboard">
+      <p id="you-score">You: 0</p>
+      <p id="bot-score">Bot: 0</p>
+      <p id="draw-score">Draws: 0</p>
+    </div>
+    <div class="buttons">
+      <button id="play-again-btn">Play Again</button>
       <button id="new-btn">New Game</button>
     </div>
-    <main>
-      <h1>Tic Tac Toe</h1>
-      <div class="container">
-        <div class="game">
-          <button class="box"></button>
-          <button class="box"></button>
-          <button class="box"></button>
-          <button class="box"></button>
-          <button class="box"></button>
-          <button class="box"></button>
-          <button class="box"></button>
-          <button class="box"></button>
-          <button class="box"></button>
-        </div>
+  </div>
+
+  <main>
+    <h1>Tic Tac Toe</h1>
+
+    <!-- Mode Selection -->
+    <div id="mode-selection" class="center-screen">
+      <h2>Select Game Mode</h2>
+      <button id="friend-mode">Play with Friend 👥</button>
+      <button id="bot-mode">Play with Bot 🤖</button>
+    </div>
+
+    <!-- Symbol Selection -->
+    <div id="symbol-selection" class="center-screen hide">
+      <h2>Choose Your Symbol</h2>
+      <button id="choose-o">O</button>
+      <button id="choose-x">X</button>
+    </div>
+
+    <!-- Game Area -->
+    <div class="container hide">
+      <div class="game">
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
       </div>
-      <button id="reset-btn">Reset Game</button>
-    </main>
-    <script src="script.js"></script>
-  </body>
+    </div>
+
+    <button id="reset-btn" class="hide">Reset Game</button>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+
 </html>
